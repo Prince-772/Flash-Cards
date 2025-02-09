@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study Deck</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <main>
+    <div class="container">
+      <div class="hamburger" onclick="toggleSideBar()">
+        <img src="Assets/Hamburger.svg" alt="Hamburger">
+      </div>
+      <div class="sidebar disabled">
+        <ul class="options-list">
+          <li class="opt add-row" onclick="toggleAddRow(event)">
+            <img src="Assets/Add Rows.svg" alt="Icon">
+            <p>Add A New Row</p>
+          </li>
+          <li class="opt delete-row" onclick="toggleDeleteRow(event)">
+            <img src="Assets/DeleteRows.svg" alt="Icon">
+            <p>Delete A Row</p>
+          </li>
+          <li class="opt manage-cards" onclick="toggelManageCards(event)">
+            <img src="Assets/Manage Cards.svg" alt="Icon">
+            <p>Manage Cards</p>
+          </li>
+          <li class="opt settings">
+            <img src="Assets/settings.svg" alt="Icon">
+            <p>Settings</p>
+          </li>
+          <li class="opt">
+            <img src="Assets/Log In.svg" alt="Icon">
+            <p>Login</p>
+          </li>
+        </ul>
+      </div>
+
+      <div class="modals">
+        <div class="add-row-modal modal">
+          <p class="heading">Add A New Row</p>
+          <button class="close" onclick="toggleAddRow(event)">
+            <img src="Assets/Close.svg" alt="Close">
+          </button>
+          <input type="text" id="add-row-input" placeholder="Enter Row Name">
+          <div class="modals-btns">
+            <button class="btn add" onclick="onAddRow()">Add</button>
+            <button class="btn cancel" onclick="toggleAddRow(event)">Cancel</button>
+          </div>
+        </div>
+        <div class="add-card-modal modal">
+          <p class="heading">Add A New Card</p>
+          <button class="close" onclick="toggleAddCard(event)">
+            <img src="Assets/Close.svg" alt="Close">
+          </button>
+          <input type="text" id="add-card-input-front" placeholder="Front of Card" name="add-card-input-front">
+          <input type="text" id="add-card-input-back" placeholder="Back of Card" name="add-card-input-back">
+          <div class="modals-btns">
+            <button class="btn add" onclick="onAddCard(event)">Add</button>
+            <button class="btn cancel" onclick="toggleAddCard(event)">Cancel</button>
+          </div>
+        </div>
+        <div class="edit-card-modal modal">
+          <p class="heading">Edit Card</p>
+          <button class="close" onclick="toggleEditCard(event)">
+            <img src="Assets/Close.svg" alt="Close">
+          </button>
+          <input type="text" id="edit-card-input-front" placeholder="Front of Card" name="edit-card-input-front">
+          <input type="text" id="edit-card-input-back" placeholder="Back of Card" name="edit-card-input-back">
+          <div class="modals-btns">
+            <button class="btn edit" onclick="onEditCard(event)">Edit</button>
+            <button class="btn cancel" onclick="toggleEditCard(event)">Cancel</button>
+          </div>
+        </div>
+        <div class="confirm-delete-modal row-confirm modal active">
+          <p class="text">Are You Sure Want To Delete This Row?</p>
+          <div class="modals-btns">
+            <button class="btn cancel-del" onclick="onConfirmDeleteRow(event,false)">Cancel</button>
+            <button class="btn delete" onclick="onConfirmDeleteRow(event,true)">Delete</button>
+          </div>
+        </div>
+        <div class="confirm-delete-modal card-confirm modal active">
+          <p class="text">Are You Sure Want To Delete This Card?</p>
+          <div class="modals-btns">
+            <button class="btn cancel-del" onclick="onConfirmDeleteCard(event,false)">Cancel</button>
+            <button class="btn delete" onclick="onConfirmDeleteCard(event,true)">Delete</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="your-flashcards">
+        <p>Your Study Deck</p>
+      </div>
+      <div class="rows">
+        <div class="row example">
+
+          <div class="name">
+            <p>Name 1</p>
+          </div>
+          <div class="cards">
+            <div class="delete-row disabled">
+              <img src="Assets/Delete Button.svg" alt="Delete">
+            </div>
+
+            <div class="add-card" onclick="toggleAddCard(event,this)">
+              <img src="Assets/Add Cards.svg" alt="Add">
+            </div>
+
+
+            <div class="card card-1" onclick="flipCard(event)" data-flipped="false">
+              <div class="front face">
+                <span class="text">Front Example</span>
+                <div class="delete btn" onclick="onDelete_card(event,this)">
+                </div>
+                <div class="edit btn" onclick="event.stopPropagation();">
+                </div>
+              </div>
+              <div class="back face">
+                <span class="text">Back Example</span>
+                <div class="delete btn" onclick="this.closest('.card').remove()">
+                </div>
+                <div class="edit btn" onclick="event.stopPropagation();">
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </main>
+  <script src="functions.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>

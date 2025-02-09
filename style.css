@@ -1,0 +1,666 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+:root {
+  --bgcolor-container: linear-gradient(135deg, #4fffb3, #25fc8d);
+  --bgcolor-modal: rgba(0, 255, 255, 0.1);
+  --bgcolor-row: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("Assets/Background/BG12.webp") no-repeat center center/cover;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+.border {
+  border: 2px solid red;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: black;
+}
+main {
+  width: 100%;
+  height: 100%;
+}
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background: var(--bgcolor-container);
+}
+.hamburger {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+  background-color: rgb(84, 84, 84);
+  border-radius: 3px;
+}
+.hamburger > img {
+  width: 30px;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+.sidebar {
+  position: absolute;
+  width: 250px;
+  height: 100%;
+  background-color: rgb(84, 84, 84);
+  border-radius: 0 10px 10px 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 98;
+  transition: transform 0.4s ease-in-out;
+  color: rgb(204, 204, 204);
+  transform: translateX(-100%);
+}
+.sidebar.active {
+  transform: translateX(0);
+}
+
+.sidebar > ul {
+  margin: 60px 0 0 0;
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  /* align-items:center; */
+  flex-direction: column;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.sidebar > ul > li {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 10px;
+  margin: 0 10px;
+  padding: 5px 20px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  flex-wrap: nowrap;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+  position: relative;
+}
+
+.sidebar > ul > li.opt > p {
+  font-size: 16px;
+  font-family: roboto, Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}
+.sidebar > ul > li.opt > img {
+  width: 16px;
+}
+.sidebar .opt.active {
+  z-index: 0;
+}
+.sidebar .opt.delete-row.active::after,
+.sidebar .opt.manage-cards.active::after {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  content: "";
+  z-index: -1;
+  border-radius: 3px;
+  background-color: rgb(84, 84, 84);
+}
+.sidebar .opt.delete-row.active::before,
+.sidebar .opt.manage-cards.active::before {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  background-image: linear-gradient(45deg, #ff00ff, #00ffff, #ffcc00, #00ff00);
+  background-size: 300%;
+  animation: move-border 4s linear 0s infinite;
+  border-radius: 3px;
+  filter: blur(2px);
+}
+@keyframes move-border {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 300% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modals {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 450px;
+  z-index: 95;
+  display: none;
+}
+.modals > .modal {
+  border: 4px solid rgb(0, 0, 0);
+  border-radius: 10px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px;
+  position: relative;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  background: var(--bgcolor-modal);
+  /* background: rgba(0, 0, 0, 0.5); */
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+}
+.modals > .modal.confirm-delete-modal {
+  gap: 10px;
+}
+
+.modals.active {
+  display: block;
+}
+.modals > .modal.active {
+  display: flex;
+  animation: fadeIn 0.3s cubic-bezier(0.01, -0.02, 0.21, 1.86);
+}
+
+.modals .heading {
+  position: absolute;
+  font-size: 24px;
+  font-weight: 600;
+  color: rgb(0, 0, 0);
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: Poppins, Arial, Helvetica, sans-serif;
+  width: 90%;
+  text-align: center;
+  margin: 10px 0 0 0;
+}
+
+.modal > .close {
+  position: absolute;
+  border-radius: 0 5px 0 0;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  outline: none;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+
+.modal > .close > img {
+  width: 75%;
+  transform: rotate(45deg);
+}
+
+.modals > .modal input {
+  height: 40px;
+  font-size: 25px;
+  outline: none;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 0 10px;
+  transition: all 200ms ease-in-out;
+}
+.modals > .modal input:focus {
+  outline: 2px solid #00ff00;
+  transform: scale(1.05);
+}
+.modals > .modal input:first-of-type {
+  margin: 50px auto auto auto;
+}
+.modals > .modal > .modals-btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+.modals > .modal.confirm-delete-modal > .modals-btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 20px;
+}
+.modals > .modal .btn {
+  margin: 0;
+  width: 100px;
+  font-weight: 600;
+  font-size: 18px;
+  border-radius: 5px;
+  padding: 5px;
+  cursor: pointer;
+  font-family: Inter, Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}
+.modals > .modal .add,
+.modals > .modal .edit {
+  border: 2px solid green;
+  background-color: lime;
+}
+.modals > .modal .cancel,
+.modals > .modal .delete {
+  border: 2px solid rgb(174, 0, 0);
+  background-color: rgb(255, 30, 30);
+  color: white;
+}
+.modals > .modal .cancel-del {
+  border: 2px solid rgb(36, 36, 36);
+  background-color: rgb(87, 87, 87);
+  color: rgb(0, 255, 30);
+}
+.modals .text {
+  position: relative;
+  text-align: center;
+  font-size: 16px;
+  font-family: Poppins, Arial, Helvetica, sans-serif;
+  color: rgb(0, 0, 0);
+  font-weight: 600;
+  margin: 0;
+}
+
+.your-flashcards {
+  font-size: 24px;
+  font-weight: bold;
+  width: 250px;
+  height: 50px;
+  background-color: rgb(0, 123, 255);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  border-radius: 5px;
+  position: absolute;
+  border: 2px solid rgb(0, 0, 0);
+  top: 15px;
+}
+.rows {
+  margin-top: 80px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.row {
+  width: 95%;
+  height: 180px;
+  border: 2px solid red;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  flex-direction: column;
+  background: var(--bgcolor-row);
+  margin: 5px 0;
+}
+
+.row > .name {
+  font-size: 20px;
+  min-width: 250px;
+  height: 30px;
+  border: solid red;
+  border-width: 0 2px 2px 2px;
+  border-radius: 0 0 5px 5px;
+  background-color: white;
+  font-weight: bold;
+  font-family: Inter, Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  z-index: 94;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.add-card,
+.delete-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 0 10px;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+}
+.add-card.disabled {
+  display: none;
+}
+.delete-row.disabled {
+  display: none;
+}
+.row.Deleting-row {
+  overflow: hidden;
+  height: 0;
+  width: 0;
+  border: none;
+  padding: 0;
+  margin: 0;
+  transition: all 200ms ease-in-out;
+  scale: 0;
+}
+.row.adding-row {
+  overflow: hidden;
+  animation: adding-row-and-card 200ms ease-in-out 0s 1 forwards;
+}
+@keyframes adding-row-and-card {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.add-card > img,
+.delete-row > img {
+  margin: 0;
+  width: 40px;
+  aspect-ratio: 1/1;
+}
+.cards {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  perspective: 1000px;
+}
+.card {
+  width: 300px;
+  height: 100%;
+  border-radius: 10px;
+  border: 2px solid black;
+  flex-shrink: 0;
+  transition: transform 500ms ease-in-out, box-shadow 0.3s;
+  position: relative;
+  transform-style: preserve-3d;
+  font-size: 20px;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  margin: 0 5px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+}
+.card.adding-card {
+  overflow: hidden;
+  animation: adding-row-and-card 200ms ease-in-out 0s 1 forwards;
+}
+.card.deleting-card {
+  overflow: hidden;
+  transform: translateX(-100%) scale(0);
+  opacity: 0;
+  margin: 0;
+  padding: 0;
+  transition: all 200ms ease-in;
+}
+
+.front {
+  background-color: yellow;
+}
+.back {
+  transform: rotateY(180deg);
+  background-color: rgb(0, 255, 55);
+}
+.face {
+  border-radius: inherit;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card .btn {
+  position: absolute;
+  width: 30px;
+  aspect-ratio: 1;
+  z-index: 1;
+  display: flex;
+  opacity: 0;
+  visibility: hidden;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  top: 5px;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 50%;
+}
+.card .btn.active {
+  opacity: 1;
+  visibility: visible;
+}
+.card .edit {
+  right: 5px;
+  background: url("Assets/Edit Button.svg") no-repeat center center / cover;
+}
+.card .delete {
+  right: 45px;
+  background: url("Assets/Delete Button.svg") no-repeat center center / cover;
+}
+.btn {
+  transition: background 0.3s ease-in-out, transform 0.2s;
+}
+input:focus {
+  outline: 2px solid #007bff;
+}
+@media (hover: hover) {
+  .card:hover div.btn {
+    opacity: 1;
+    visibility: visible;
+  }
+  .modal > .close:hover {
+    background-color: red;
+  }
+
+  .modal > .close:hover img {
+    filter: invert(1) saturate(0%) brightness(200%);
+  }
+  .sidebar > ul > li:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    /* border-radius: 5px; */
+    box-shadow: 0 0 2px 0 black;
+  }
+  .card:hover {
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.5);
+  }
+  .btn:hover {
+    transform: scale(1.05);
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .sidebar {
+    width: 200px;
+  }
+  .modals {
+    width: 400px;
+  }
+  .modals > .modal {
+    gap: 15px;
+  }
+  .modals .heading {
+    margin: 15px 0 0 0;
+    font-size: 20px;
+  }
+  .modals .text{
+    font-size: 14px;
+  }
+  .modals > .modal input {
+    height: 30px;
+    font-size: 20px;
+    width: 80%;
+    outline: none;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 0 10px;
+  }
+  .modals > .modal > .btn {
+    width: 80px;
+    border-radius: 5px;
+  }
+
+  .your-flashcards {
+    font-size: 20px;
+    background-color: red;
+    width: 200px;
+    height: 45px;
+  }
+  .rows {
+    margin-top: 70px;
+  }
+  .row {
+    height: 160px;
+    border-radius: 5px;
+  }
+  .row > .name {
+    font-size: 18px;
+    min-width: 200px;
+  }
+  .add-card,
+  .delete-row {
+    margin: 0;
+  }
+  .add-card > img,
+  .delete-row > img {
+    width: 35px;
+  }
+  .card {
+    width: 250px;
+    font-size: 18px;
+  }
+  .card .btn {
+    width: 25px;
+  }
+  .card .edit {
+    right: 5px;
+  }
+  .card .delete {
+    right: 35px;
+  }
+}
+@media (min-width: 200px) and (max-width: 767px) {
+  .sidebar {
+    width: 200px;
+  }
+  .modals {
+    width: min(350px, 80vw);
+  }
+  .modals > .modal {
+    gap: 10px;
+  }
+  .modals .heading {
+    margin: 10px 0 0 0;
+    font-size: 1em;
+  }
+  .modals .text{
+    font-size: 14px;
+  }
+  .modal > .close {
+    width: 30px;
+    height: 30px;
+  }
+  .modals > .modal input {
+    height: 30px;
+    font-size: 20px;
+    width: 80%;
+    outline: none;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 0 10px;
+  }
+  .modals > .modal > .modals-btns {
+    flex-direction: row;
+    gap: 10px;
+  }
+  .modals > .modal .btn {
+    width: 60px;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  .modals > .modal input:first-of-type {
+    margin: 40px auto auto auto;
+  }
+
+  .your-flashcards {
+    font-size: 18px;
+    background-color: rgb(0, 255, 72);
+    width: 150px;
+    height: 35px;
+  }
+  .rows {
+    margin-top: 55px;
+  }
+  .row {
+    height: 150px;
+    border-radius: 5px;
+  }
+  .row > .name {
+    font-size: 16px;
+    min-width: 150px;
+    height: 25px;
+  }
+  .add-card,
+  .delete-row {
+    margin: 0;
+  }
+  .add-card > img,
+  .delete-row > img {
+    width: 30px;
+  }
+  .card {
+    width: min(250px, 60vw);
+    font-size: 16px;
+  }
+  .card .btn {
+    width: 25px;
+  }
+  .card .edit {
+    right: 5px;
+  }
+  .card .delete {
+    right: 35px;
+  }
+}
