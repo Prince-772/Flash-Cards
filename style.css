@@ -85,7 +85,7 @@ main {
   align-items: center;
   gap: 10px;
   margin: 0 10px;
-  padding: 5px 20px;
+  padding: 5px 10px;
   border-radius: 3px;
   flex-shrink: 0;
   flex-wrap: nowrap;
@@ -99,7 +99,7 @@ main {
   font-family: roboto, Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
 }
 .sidebar > ul > li.opt > img {
-  width: 16px;
+  width: 20px;
 }
 .sidebar .opt.active {
   z-index: 0;
@@ -242,7 +242,7 @@ main {
   transition: all 200ms ease-in-out;
 }
 .modals > .modal input:focus {
-  outline: 2px solid #00ff00;
+  border-color: blue;
   transform: scale(1.05);
 }
 .modals > .modal input:first-of-type {
@@ -296,6 +296,37 @@ main {
   color: rgb(0, 0, 0);
   font-weight: 600;
   margin: 0;
+}
+.modal.shortcuts{
+  padding: 0px;
+  border-radius: 0;
+}
+.modal.shortcuts > .close{
+  top: 2px;
+  right: 2px;
+  border-radius: 0;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  font-size: 16px;
+  text-align: left;
+  overflow: hidden;
+  border-radius: inherit;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+}
+
+th,
+td {
+  padding: 12px;
+  font-weight: 600;
+  border: 2px solid black;
+}
+
+th {
+  background-color: #007bff;
+  color: white;
 }
 
 .your-flashcards {
@@ -484,9 +515,7 @@ main {
 .btn {
   transition: background 0.3s ease-in-out, transform 0.2s;
 }
-input:focus {
-  outline: 2px solid #007bff;
-}
+
 @media (hover: hover) {
   .card:hover div.btn {
     opacity: 1;
@@ -525,7 +554,7 @@ input:focus {
     margin: 15px 0 0 0;
     font-size: 20px;
   }
-  .modals .text{
+  .modals .text {
     font-size: 14px;
   }
   .modals > .modal input {
@@ -595,7 +624,7 @@ input:focus {
     margin: 10px 0 0 0;
     font-size: 1em;
   }
-  .modals .text{
+  .modals .text {
     font-size: 14px;
   }
   .modal > .close {
@@ -623,7 +652,18 @@ input:focus {
   .modals > .modal input:first-of-type {
     margin: 40px auto auto auto;
   }
-
+  .modal.shortcuts table {
+    font-size: 12px;
+  }
+  .modal.shortcuts .close {
+    width: 20px;
+    height: 20px;
+  }
+  .modal.shortcuts table td,
+  .modal.shortcuts table th{
+    padding: 5px;
+  }
+  
   .your-flashcards {
     font-size: 18px;
     background-color: rgb(0, 255, 72);

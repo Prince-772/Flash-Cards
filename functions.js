@@ -43,6 +43,7 @@ function toggleAddRow(event, shortcut = false) {
     add_row_modal.classList.add("active");
     modals_box.classList.add("active");
     add_row_modal_active = true;
+    add_row_input.focus()
     shortcut ? null : toggleSideBar();
   }
 }
@@ -57,10 +58,14 @@ function toggleAddCard(event, rowToInsert) {
     add_card_modal.classList.add("active");
     modals_box.classList.add("active");
     add_card_modal_active = true;
+    add_card_input_front.focus()
     cards_container_selected = rowToInsert;
   }
 }
-
+function toggelShowShortcuts(event){
+  event.stopPropagation()
+  show_shortcut_modal.classList.toggle("active")
+}
 function toggleEditCard(event, card) {
   closeAllModals();
   event.stopPropagation();
@@ -75,6 +80,7 @@ function toggleEditCard(event, card) {
     edit_card_input_front.value =
       card.querySelector(".front .text").textContent;
     edit_card_input_back.value = card.querySelector(".back .text").textContent;
+    edit_card_input_front.focus()
   }
 }
 function onEditCard(event) {

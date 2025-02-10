@@ -9,6 +9,7 @@ let add_card_modal = document.querySelector(".modals .add-card-modal"),
   add_card_modal_active = false;
 let edit_card_modal = document.querySelector(".modals .edit-card-modal"),
   edit_card_modal_active = false;
+let show_shortcut_modal = document.querySelector(".modals .modal.shortcuts");
 const rows_box = document.querySelector(".rows");
 let deletingRow = false;
 let managingCards = false;
@@ -32,12 +33,11 @@ const edit_card_input_back = document.querySelector("#edit-card-input-back");
 const edit_card_add_btn = document.querySelector(".edit-card-modal .btn.edit");
 let editing_card = null;
 
-
 //confirm delete modals
-const rowConfirmDeleteModal = document.querySelector(".modal.row-confirm")
-const cardConfirmDeleteModal = document.querySelector(".modal.card-confirm")
-let toDeleteCard = null
-let toDeleteRow = null
+const rowConfirmDeleteModal = document.querySelector(".modal.row-confirm");
+const cardConfirmDeleteModal = document.querySelector(".modal.card-confirm");
+let toDeleteCard = null;
+let toDeleteRow = null;
 
 add_row_input.addEventListener("keydown", (event) =>
   event.key === "Enter" ? onAddRow() : null
@@ -62,15 +62,21 @@ edit_card_input_back.addEventListener("keydown", (event) =>
 );
 
 document.addEventListener("keydown", (event) => {
-  if (event.ctrlKey && event.key.toLowerCase() === "p") {
-    event.preventDefault()
-    toggleAddRow(event,true);
+  if (event.ctrlKey && !event.shiftKey && event.key.toLowerCase() === "p") {
+    event.preventDefault();
+    toggleAddRow(event, true);
   } else if (event.key === "Escape") {
     closeAllModals();
-  } else if (event.ctrlKey && event.key.toLowerCase()==="d"){
-    event.preventDefault()
-    toggleDeleteRow(event, true)
-    toggelManageCards(event, true)
+  } else if (event.ctrlKey && !event.shiftKey && event.key.toLowerCase() === "d") {
+    event.preventDefault();
+    toggleDeleteRow(event, true);
+    toggelManageCards(event, true);
+  } else if (
+    event.key.toLocaleLowerCase() === "k" &&
+    event.ctrlKey &&
+    event.shiftKey
+  ) {
+    toggelShowShortcuts(event);
   }
 });
 

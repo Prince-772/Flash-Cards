@@ -18,7 +18,7 @@
         <ul class="options-list">
           <li class="opt add-row" onclick="toggleAddRow(event)">
             <img src="Assets/Add Rows.svg" alt="Icon">
-            <p>Add A New Row</p>
+            <p>Add Row</p>
           </li>
           <li class="opt delete-row" onclick="toggleDeleteRow(event)">
             <img src="Assets/DeleteRows.svg" alt="Icon">
@@ -27,6 +27,10 @@
           <li class="opt manage-cards" onclick="toggelManageCards(event)">
             <img src="Assets/Manage Cards.svg" alt="Icon">
             <p>Manage Cards</p>
+          </li>
+          <li class="opt show-shortcut" onclick="toggelShowShortcuts(event)">
+            <img src="Assets/Keyboard.svg" alt="Icon">
+            <p>Show Shortcuts</p>
           </li>
           <li class="opt settings">
             <img src="Assets/settings.svg" alt="Icon">
@@ -39,7 +43,7 @@
         </ul>
       </div>
 
-      <div class="modals">
+      <div class="modals active">
         <div class="add-row-modal modal">
           <p class="heading">Add A New Row</p>
           <button class="close" onclick="toggleAddRow(event)">
@@ -75,19 +79,42 @@
             <button class="btn cancel" onclick="toggleEditCard(event)">Cancel</button>
           </div>
         </div>
-        <div class="confirm-delete-modal row-confirm modal active">
+        <div class="confirm-delete-modal row-confirm modal">
           <p class="text">Are You Sure Want To Delete This Row?</p>
           <div class="modals-btns">
             <button class="btn cancel-del" onclick="onConfirmDeleteRow(event,false)">Cancel</button>
             <button class="btn delete" onclick="onConfirmDeleteRow(event,true)">Delete</button>
           </div>
         </div>
-        <div class="confirm-delete-modal card-confirm modal active">
+        <div class="confirm-delete-modal card-confirm modal">
           <p class="text">Are You Sure Want To Delete This Card?</p>
           <div class="modals-btns">
             <button class="btn cancel-del" onclick="onConfirmDeleteCard(event,false)">Cancel</button>
             <button class="btn delete" onclick="onConfirmDeleteCard(event,true)">Delete</button>
           </div>
+        </div>
+        <div class="modal shortcuts">
+          <button class="close" onclick="toggelShowShortcuts(event)">
+            <img src="Assets/Close.svg" alt="Close">
+          </button>
+          <table>
+            <tr>
+              <th>Keys</th>
+              <th>Function</th>
+            </tr>
+            <tr>
+              <td>Ctrl + D</td>
+              <td>Manage Cards And Rows</td>
+            </tr>
+            <tr>
+              <td>Ctrl + P</td>
+              <td>Add Rows</td>
+            </tr>
+            <tr>
+              <td>Ctrl + Shift + K</td>
+              <td>Show Shortcuts</td>
+            </tr>
+          </table>
         </div>
       </div>
 
@@ -105,24 +132,24 @@
               <img src="Assets/Delete Button.svg" alt="Delete">
             </div>
 
-            <div class="add-card" onclick="toggleAddCard(event,this)">
+            <div class="add-card">
               <img src="Assets/Add Cards.svg" alt="Add">
             </div>
 
 
             <div class="card card-1" onclick="flipCard(event)" data-flipped="false">
               <div class="front face">
-                <span class="text">Front Example</span>
-                <div class="delete btn" onclick="onDelete_card(event,this)">
+                <span class="text">Click To Flip Back</span>
+                <div class="delete btn" onclick="event.stopPropagation()">
                 </div>
-                <div class="edit btn" onclick="event.stopPropagation();">
+                <div class="edit btn"" onclick=" event.stopPropagation()">
                 </div>
               </div>
-              <div class="back face">
-                <span class="text">Back Example</span>
-                <div class="delete btn" onclick="this.closest('.card').remove()">
+              <div class=" back face">
+                <span class="text">Click To Flip Front</span>
+                <div class="delete btn" onclick="event.stopPropagation()">
                 </div>
-                <div class="edit btn" onclick="event.stopPropagation();">
+                <div class="edit btn" onclick="event.stopPropagation()">
                 </div>
               </div>
             </div>
