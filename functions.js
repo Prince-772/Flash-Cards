@@ -153,6 +153,11 @@ function toggleClassNameOfBtns(addBtn, deleteBtn) {
     }
   }
 }
+function toggleRowName(event,new_row_name,hideShowBtn){
+  event.stopPropagation()
+  hideShowBtn.classList.toggle("hidden")
+  new_row_name.classList.toggle("hidden")
+}
 function onAddRow() {
   let new_name = add_row_input.value.trim();
   if (new_name) {
@@ -185,11 +190,23 @@ function createRow(rowName) {
   let new_row_name = document.createElement("div");
   new_row_name.className = "name";
 
+  let new_row_name_button = document.createElement("div");
+  new_row_name_button.className = "hide-show";
+
+  let new_row_name_buttonImg = document.createElement("img");
+  new_row_name_buttonImg.className = "hide";
+  new_row_name_buttonImg.src = "Assets/Hide-Show.svg";
+  new_row_name_buttonImg.alt = "Hide-Show";
+  new_row_name_button.appendChild(new_row_name_buttonImg)
+
+  new_row_name_button.onclick = (event)=>toggleRowName(event,new_row_name,new_row_name_button);
+
   let new_para = document.createElement("p");
   new_para.textContent = rowName;
 
   new_row_name.appendChild(new_para);
   new_row.appendChild(new_row_name);
+  new_row.appendChild(new_row_name_button);
 
   // Cards Container
   let new_cards = document.createElement("div");
