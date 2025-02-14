@@ -43,7 +43,7 @@ function toggleAddRow(event, shortcut = false) {
     add_row_modal.classList.add("active");
     modals_box.classList.add("active");
     add_row_modal_active = true;
-    add_row_input.focus()
+    add_row_input.focus();
     shortcut ? null : toggleSideBar();
   }
 }
@@ -58,13 +58,24 @@ function toggleAddCard(event, rowToInsert) {
     add_card_modal.classList.add("active");
     modals_box.classList.add("active");
     add_card_modal_active = true;
-    add_card_input_front.focus()
+    add_card_input_front.focus();
     cards_container_selected = rowToInsert;
   }
 }
-function toggelShowShortcuts(event){
-  event.stopPropagation()
-  show_shortcut_modal.classList.toggle("active")
+function toggelShowShortcuts(event) {
+  closeAllModals();
+  event.stopPropagation();
+  if (show_shortcut_modal_active) {
+    showShortcutsOption.classList.remove("active")
+    show_shortcut_modal.classList.remove("active");
+    modals_box.classList.remove("active");
+    show_shortcut_modal_active = false;
+  } else {
+    showShortcutsOption.classList.add("active")
+    show_shortcut_modal.classList.add("active");
+    modals_box.classList.add("active");
+    show_shortcut_modal_active = true;
+  }
 }
 function toggleEditCard(event, card) {
   closeAllModals();
@@ -80,7 +91,7 @@ function toggleEditCard(event, card) {
     edit_card_input_front.value =
       card.querySelector(".front .text").textContent;
     edit_card_input_back.value = card.querySelector(".back .text").textContent;
-    edit_card_input_front.focus()
+    edit_card_input_front.focus();
   }
 }
 function onEditCard(event) {
@@ -153,10 +164,10 @@ function toggleClassNameOfBtns(addBtn, deleteBtn) {
     }
   }
 }
-function toggleRowName(event,new_row_name,hideShowBtn){
-  event.stopPropagation()
-  hideShowBtn.classList.toggle("hidden")
-  new_row_name.classList.toggle("hidden")
+function toggleRowName(event, new_row_name, hideShowBtn) {
+  event.stopPropagation();
+  hideShowBtn.classList.toggle("hidden");
+  new_row_name.classList.toggle("hidden");
 }
 function onAddRow() {
   let new_name = add_row_input.value.trim();
@@ -197,9 +208,10 @@ function createRow(rowName) {
   new_row_name_buttonImg.className = "hide";
   new_row_name_buttonImg.src = "Assets/Hide-Show.svg";
   new_row_name_buttonImg.alt = "Hide-Show";
-  new_row_name_button.appendChild(new_row_name_buttonImg)
+  new_row_name_button.appendChild(new_row_name_buttonImg);
 
-  new_row_name_button.onclick = (event)=>toggleRowName(event,new_row_name,new_row_name_button);
+  new_row_name_button.onclick = (event) =>
+    toggleRowName(event, new_row_name, new_row_name_button);
 
   let new_para = document.createElement("p");
   new_para.textContent = rowName;
@@ -335,7 +347,7 @@ function createCard(frontText, backText) {
 function onDelete_card(event, cardToDelete) {
   event.stopPropagation();
   toDeleteCard = cardToDelete;
-  closeAllModals()
+  closeAllModals();
   modals_box.classList.toggle("active");
   cardConfirmDeleteModal.classList.toggle("active");
 
@@ -366,7 +378,7 @@ function onConfirmDeleteCard(event, isConfirmed) {
 function onDelete_row(event, rowToDelete) {
   event.stopPropagation();
   toDeleteRow = rowToDelete;
-  closeAllModals()
+  closeAllModals();
   modals_box.classList.toggle("active");
   rowConfirmDeleteModal.classList.toggle("active");
   setTimeout(() => {

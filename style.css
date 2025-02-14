@@ -93,6 +93,10 @@ main {
   transition: background 0.3s ease-in-out;
   position: relative;
 }
+.sidebar > ul > li:active {
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 2px 0 black;
+}
 
 .sidebar > ul > li.opt > p {
   font-size: 16px;
@@ -105,7 +109,8 @@ main {
   z-index: 0;
 }
 .sidebar .opt.delete-row.active::after,
-.sidebar .opt.manage-cards.active::after {
+.sidebar .opt.manage-cards.active::after,
+.sidebar .opt.show-shortcut.active::after {
   position: absolute;
   left: 0;
   top: 0;
@@ -117,7 +122,8 @@ main {
   background-color: rgb(84, 84, 84);
 }
 .sidebar .opt.delete-row.active::before,
-.sidebar .opt.manage-cards.active::before {
+.sidebar .opt.manage-cards.active::before,
+.sidebar .opt.show-shortcut.active::before {
   content: "";
   z-index: -1;
   position: absolute;
@@ -570,7 +576,6 @@ th {
   }
   .sidebar > ul > li:hover {
     background-color: rgba(255, 255, 255, 0.1);
-    /* border-radius: 5px; */
     box-shadow: 0 0 2px 0 black;
   }
   .card:hover {
@@ -628,7 +633,7 @@ th {
     font-size: 18px;
     min-width: 200px;
   }
-  .row div.hide-show{
+  .row div.hide-show {
     transform: translateY(-53px);
   }
   .row div.hide-show.hidden {
@@ -728,7 +733,7 @@ th {
     min-width: 150px;
     height: 25px;
   }
-  .row div.hide-show{
+  .row div.hide-show {
     transform: translateY(-52px);
   }
   .row div.hide-show.hidden {

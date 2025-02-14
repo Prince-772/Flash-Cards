@@ -9,12 +9,14 @@ let add_card_modal = document.querySelector(".modals .add-card-modal"),
   add_card_modal_active = false;
 let edit_card_modal = document.querySelector(".modals .edit-card-modal"),
   edit_card_modal_active = false;
-let show_shortcut_modal = document.querySelector(".modals .modal.shortcuts");
+let show_shortcut_modal = document.querySelector(".modals .modal.shortcuts"),
+  show_shortcut_modal_active = false;
 const rows_box = document.querySelector(".rows");
 let deletingRow = false;
 let managingCards = false;
 let deleteOption = document.querySelector(".opt.delete-row");
 let manageCardsOption = document.querySelector(".opt.manage-cards");
+let showShortcutsOption = document.querySelector(".opt.show-shortcut");
 //add_row_modal
 const add_row_input = document.querySelector(
   ".add-row-modal input#add-row-input"
@@ -67,7 +69,11 @@ document.addEventListener("keydown", (event) => {
     toggleAddRow(event, true);
   } else if (event.key === "Escape") {
     closeAllModals();
-  } else if (event.ctrlKey && !event.shiftKey && event.key.toLowerCase() === "d") {
+  } else if (
+    event.ctrlKey &&
+    !event.shiftKey &&
+    event.key.toLowerCase() === "d"
+  ) {
     event.preventDefault();
     toggleDeleteRow(event, true);
     toggelManageCards(event, true);
@@ -77,6 +83,13 @@ document.addEventListener("keydown", (event) => {
     event.shiftKey
   ) {
     toggelShowShortcuts(event);
+  } else if (
+    event.key.toLocaleLowerCase() === "f" &&
+    event.ctrlKey &&
+    !event.shiftKey
+  ) {
+    event.preventDefault();
+    toggleSideBar();
   }
 });
 
